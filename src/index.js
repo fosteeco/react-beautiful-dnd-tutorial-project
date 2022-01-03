@@ -1,17 +1,27 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import { useState } from "react";
+import ReactDOM from "react-dom";
+import initialData from "./initial-data-";
+import Column from "./Column.jsx";
+import { DragDropContext } from "react-beautiful-dnd";
+import "reset-css";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+const App = () => {
+  const [appState, setAppState] = useState(initialData);
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+  const onDragEnd = (result) => {
+    // TODO: reorder our column
+  };
+
+  return (
+    <DragDropContext onDragEnd={onDragEnd}>
+      {appState.columnOrder.map((columnId) => {
+        const column = appState.columns[columnId];
+        const tasks = column.taskIds.map((taskId) => appState.tasks[taskId]);
+        return <Column key={column.id} column={column} tasks={tasks} />;
+      })}
+    </DragDropContext>
+  );
+};
+
+ReactDOM.render(<App />, document.getElementById("root"));
