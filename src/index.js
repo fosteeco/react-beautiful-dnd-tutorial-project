@@ -11,6 +11,36 @@ const App = () => {
 
   const onDragEnd = (result) => {
     // TODO: reorder our column
+    const { destination, source, draggableId } = result;
+
+    if (!destination) {
+      return;
+    }
+
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    ) {
+      return;
+    }
+
+    const column = appState.columns[source.droppableId];
+    const newTaskIds = Array.from(column.taskIds);
+    newTaskIds.splice(source.index, 1);
+    newTaskIds.splice(destination.index, 0, draggableId);
+
+    const newColumn = {
+      ...column,
+      taskIds: newTaskIds,
+    };
+
+    setAppState({
+      ...appState,
+      columns: {
+        ...appState.columns,
+        [newColumn.id]: newColumn,
+      },
+    });
   };
 
   return (
