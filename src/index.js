@@ -10,7 +10,6 @@ const App = () => {
   const [appState, setAppState] = useState(initialData);
 
   const onDragEnd = (result) => {
-    // TODO: reorder our column
     const { destination, source, draggableId } = result;
 
     if (!destination) {
