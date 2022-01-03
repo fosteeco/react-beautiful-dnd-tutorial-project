@@ -40,13 +40,16 @@ const App = () => {
         taskIds: newTaskIds,
       };
 
-      setAppState({
+      const newState = {
         ...appState,
         columns: {
           ...appState.columns,
           [newColumn.id]: newColumn,
         },
-      });
+      };
+
+      setAppState(newState);
+      return;
     }
 
     // Moving from one list to another
